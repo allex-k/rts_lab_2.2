@@ -1,5 +1,5 @@
-//Системи реального часу.Лабораторна робота 2.2.Швидке перетворення Фур'є
-//Кравчука Олександра ІВ - 72
+//РЎРёСЃС‚РµРјРё СЂРµР°Р»СЊРЅРѕРіРѕ С‡Р°СЃСѓ.Р›Р°Р±РѕСЂР°С‚РѕСЂРЅР° СЂРѕР±РѕС‚Р° 2.2.РЁРІРёРґРєРµ РїРµСЂРµС‚РІРѕСЂРµРЅРЅСЏ Р¤СѓСЂ'С”
+//РљСЂР°РІС‡СѓРєР° РћР»РµРєСЃР°РЅРґСЂР° Р†Р’ - 72
 #include <iostream>
 #include <cinttypes>
 #include <complex>
@@ -10,7 +10,7 @@
 typedef std::complex<float> complexf;
 #define SLEEP_TIME 900000
 
-//прототипи функцій
+//РїСЂРѕС‚РѕС‚РёРїРё С„СѓРЅРєС†С–Р№
 void generate_signal(uint32_t n, float Wmax, uint32_t N, float step, float* t, float* signal);
 void fast_fourier_transform(float* signal, uint32_t N, complexf* result);
 
@@ -28,21 +28,21 @@ void fast_fourier_transform(complexf* a, uint32_t n) {
 	if (n == 1)  return;
 	uint32_t n_2 = n >> 1; //n_2 = n/2;
 	uint32_t i, j;
-	//a0, a1 - парні, непарні елементи масиву a відповідно
+	//a0, a1 - РїР°СЂРЅС–, РЅРµРїР°СЂРЅС– РµР»РµРјРµРЅС‚Рё РјР°СЃРёРІСѓ a РІС–РґРїРѕРІС–РґРЅРѕ
 	complexf* a0 = new complexf[n_2];
 	complexf* a1 = new complexf[n_2];
-	for (i = 0, j = 0; i < n; i += 2, ++j) { //розділення
+	for (i = 0, j = 0; i < n; i += 2, ++j) { //СЂРѕР·РґС–Р»РµРЅРЅСЏ
 		a0[j] = a[i];
 		a1[j] = a[i + 1];
 	}
-	//рекурсія
+	//СЂРµРєСѓСЂСЃС–СЏ
 	fast_fourier_transform(a0, n_2);
 	fast_fourier_transform(a1, n_2);
 
 	float ang = 2 * M_PI / n;
 	complexf w(1), wn(cosf(ang), sinf(ang)); //WpN, W1N 
-	for (i = 0; i < n_2; ++i) { //об'єднання
-		a[i] = a0[i] + w * a1[i]; //операція "метелик"
+	for (i = 0; i < n_2; ++i) { //РѕР±'С”РґРЅР°РЅРЅСЏ
+		a[i] = a0[i] + w * a1[i]; //РѕРїРµСЂР°С†С–СЏ "РјРµС‚РµР»РёРє"
 		a[i + n_2] = a0[i] - w * a1[i];
 		w *= wn;
 	}
@@ -60,11 +60,11 @@ void generate_signal(uint32_t n, float Wmax, uint32_t N, float step,
 	float* t, float* signal) {
 
 	uint32_t i, j;
-	float Wmax2 = Wmax * 2 * M_PI; //циклічна частота
+	float Wmax2 = Wmax * 2 * M_PI; //С†РёРєР»С–С‡РЅР° С‡Р°СЃС‚РѕС‚Р°
 	float A = 0.0f, fi = 0.0f, w = 0.0f, max_t;
 	max_t = step * (N - 1);
 
-	//volume(signal, N, 0.0f); //заповнення нулями
+	//volume(signal, N, 0.0f); //Р·Р°РїРѕРІРЅРµРЅРЅСЏ РЅСѓР»СЏРјРё
 	linspace(t, 0, max_t, N);
 
 	srand(time(0));
@@ -84,12 +84,12 @@ int main() {
 	setlocale(LC_ALL, "Ru");
 	
 	uint32_t
-		n = 8,  //к-сть гармонік  
-		Wmax = 1200, //гранична частота
-		N = 16384, //к-сть дискретних відліків
+		n = 8,  //Рє-СЃС‚СЊ РіР°СЂРјРѕРЅС–Рє  
+		Wmax = 1200, //РіСЂР°РЅРёС‡РЅР° С‡Р°СЃС‚РѕС‚Р°
+		N = 16384, //Рє-СЃС‚СЊ РґРёСЃРєСЂРµС‚РЅРёС… РІС–РґР»С–РєС–РІ
 		i;
 	uint32_t N2 = N / 2 + 1;
-	float step = 0.0004, T; //step -крок часу
+	float step = 0.0004, T; //step -РєСЂРѕРє С‡Р°СЃСѓ
 
 	float* t = new float[N];
 	float* signal = new float[N]();
@@ -109,7 +109,7 @@ int main() {
 	timeBefore = GetTickCount();
 	fast_fourier_transform(signal, N, fourier_transform_result);  //####
 	timeDiff = GetTickCount() - timeBefore;
-	std::cout << "time elapsed(швидке): " << timeDiff << " мс\n";
+	std::cout << "time elapsed(С€РІРёРґРєРµ): " << timeDiff << " РјСЃ\n";
 	//#############################################################
 
 	abs_complex_arr(fourier_transform_result, N2, ampliudes);
@@ -128,7 +128,7 @@ int main() {
 }
 
 //###############################################################
-//інші функції
+//С–РЅС€С– С„СѓРЅРєС†С–С—
 void linspace(float* arr, float start, float end, uint32_t n) {
 	float current = start;
 	float step = (end - start) / ((float)n - 1);
@@ -167,7 +167,7 @@ void abs_complex_arr(complexf* arr, uint32_t n, float* result) {
 
 
 //###############################################################
-//функції для малювання графіків в консоль
+//С„СѓРЅРєС†С–С— РґР»СЏ РјР°Р»СЋРІР°РЅРЅСЏ РіСЂР°С„С–РєС–РІ РІ РєРѕРЅСЃРѕР»СЊ
 struct TransformParameters {
 	float scaleX, scaleY, offsetX, offsetY;
 };
