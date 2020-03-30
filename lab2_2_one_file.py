@@ -1,3 +1,5 @@
+#Системи реального часу. Лабораторна робота 2.2. Швидке перетворення Фур'є
+#Кравчука Олександра ІВ-72
 import numpy as np
 import matplotlib.pyplot as plt
 import random as rnd
