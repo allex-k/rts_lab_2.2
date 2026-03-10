@@ -3,3 +3,5 @@
 Реалізовано на python, c++
 
 ![rts_lab2.2_c++_графік](rts_lab2.2_c++_графік.PNG)
+![rts_lab2.2_c++_графік_N=512](rts_lab2.2_c++_графік_N=512.PNG)
+![rts_lab2.2_python_графік.PNG](rts_lab2.2_python_графік.PNG)
